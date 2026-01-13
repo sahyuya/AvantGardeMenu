@@ -1,0 +1,90 @@
+# テレポートサブメニュー設定
+
+submenu:
+  id: "teleport"
+  title: "<green><bold>🧭 テレポート</bold></green>"
+
+  bedrock:
+    title: "§a§lテレポート"
+    content: "§7移動先を選択してください"
+
+# テレポート先
+items:
+  spawn:
+    title: "<aqua><bold>スポーン</bold></aqua>"
+    icon: BEACON
+    description:
+      - "§7スポーン地点へ移動"
+      - "§8サーバーの中心地"
+    command: "[player]spawn"
+    permission: null
+    order: 1
+
+  resource:
+    title: "<dark_green><bold>資源ワールド</bold></dark_green>"
+    icon: GRASS_BLOCK
+    description:
+      - "§7資源採取用ワールドへ移動"
+      - "§8自由に採掘・伐採可能"
+    command: "[player]warp shigen"
+    permission: null
+    order: 2
+
+  cave:
+    title: "<gray><bold>鉱山</bold></gray>"
+    icon: IRON_PICKAXE
+    description:
+      - "§7鉱山エリアへ移動"
+      - "§8鉱石が豊富"
+    command: "[player]warp cave"
+    permission: null
+    order: 3
+
+  shop_area:
+    title: "<gold><bold>おやさい商店街</bold></gold>"
+    icon: EMERALD
+    description:
+      - "§7商店街エリアへ移動"
+      - "§8プレイヤーショップがたくさん"
+    command: "[player]warp shop"
+    permission: null
+    order: 4
+
+  casino:
+    title: "<red><bold>カジノ</bold></red>"
+    icon: GOLD_BLOCK
+    description:
+      - "§7カジノエリアへ移動"
+      - "§8運試しをしよう"
+    command: "[player]warp casino"
+    permission: null
+    order: 5
+
+  pvp:
+    title: "<dark_red><bold>PvPロビー</bold></dark_red>"
+    icon: DIAMOND_SWORD
+    description:
+      - "§7PvPエリアへ移動"
+      - "§8対戦を楽しもう"
+    command: "[player]warp pvp"
+    permission: null
+    order: 6
+
+  ender_tt:
+    title: "<dark_purple><bold>エンダーマントラップタワー</bold></dark_purple>"
+    icon: ENDER_PEARL
+    description:
+      - "§7エンダーマンTTへ移動"
+      - "§8経験値稼ぎに最適"
+    command: "[player]warp endertt"
+    permission: null
+    order: 7
+
+  back:
+    title: "<red>戻る</red>"
+    icon: BARRIER
+    description:
+      - "§7メインメニューに戻る"
+    command: "[special]back"
+    permission: null
+    order: 8

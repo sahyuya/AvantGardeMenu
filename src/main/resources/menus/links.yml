@@ -1,0 +1,80 @@
+# リンクサブメニュー設定
+
+submenu:
+  id: "links"
+  title: "<blue><bold>🔗 リンク</bold></blue>"
+
+  bedrock:
+    title: "§9§lリンク"
+    content: "§7開きたいリンクを選択してください"
+
+# リンク・ツール
+items:
+  wiki:
+    title: "<aqua><bold>サーバー公式Wiki</bold></aqua>"
+    icon: BOOK
+    description:
+      - "§7サーバーのWikiを開く"
+      - "§8http://wiki.oyasai.icu"
+    command: "[special]open_url:http://wiki.oyasai.icu"
+    permission: null
+    order: 1
+
+  discord:
+    title: "<#5865F2><bold>公式Discord</bold></#5865F2>"
+    icon: PAPER
+    description:
+      - "§7Discordサーバーに参加"
+      - "§8https://discord.gg/8kcRVqHS64"
+    command: "[special]open_url:https://discord.gg/8kcRVqHS64"
+    permission: null
+    order: 2
+
+  vote_jms:
+    title: "<green><bold>JMS投票</bold></green>"
+    icon: EMERALD
+    description:
+      - "§7JMSでサーバーに投票"
+      - "§8サーバーを応援しよう"
+    command: "[special]open_url:https://minecraft.jp/servers/oyasai.io"
+    permission: null
+    order: 3
+
+  vote_mp:
+    title: "<yellow><bold>MinePortal投票</bold></yellow>"
+    icon: GOLD_INGOT
+    description:
+      - "§7MinePortalでサーバーに投票"
+      - "§8サーバーを応援しよう"
+    command: "[special]open_url:https://mineportal.jp/servers/clrfqwdka0000lgansuxtj9mi"
+    permission: null
+    order: 4
+
+  bluemap:
+    title: "<dark_aqua><bold>サーバーマップ</bold></dark_aqua>"
+    icon: FILLED_MAP
+    description:
+      - "§7BlueMapでサーバーマップを見る"
+      - "§8http://oyasai.io:8100"
+    command: "[special]open_url:http://oyasai.io:8100"
+    permission: null
+    order: 5
+
+  tomap:
+    title: "<light_purple><bold>画像をマップアート化</bold></light_purple>"
+    icon: MAP
+    description:
+      - "§7画像URLをマップアートに変換"
+      - "§8URLとサイズを入力"
+    command: "[special]tomap_dialog"
+    permission: null
+    order: 6
+
+  back:
+    title: "<red>戻る</red>"
+    icon: BARRIER
+    description:
+      - "§7メインメニューに戻る"
+    command: "[special]back"
+    permission: null
+    order: 7

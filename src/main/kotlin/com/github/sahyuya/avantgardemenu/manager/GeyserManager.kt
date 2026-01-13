@@ -35,7 +35,7 @@ class GeyserManager(private val plugin: AvantGardeMenu) {
                 .filter { item ->
                     item.permission == null || player.hasPermission(item.permission)
                 }
-                .sortedBy { it.slot }
+                .sortedBy { it.permission }
 
             // SimpleFormの作成
             val formBuilder = SimpleForm.builder()

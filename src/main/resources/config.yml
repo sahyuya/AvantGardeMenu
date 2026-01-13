@@ -1,95 +1,95 @@
-# VisualMenu Configuration File
-# MiniMessage形式とレガシーカラーコード(§)の両方をサポート
+# AvantGardeMenu Main Configuration
+# Paper 1.21.6+ Dialog API & Geyser Cumulus Support
 
+# メイン設定
 menu:
-  # Javaエディション用のメニュータイトル
-  title: "<gradient:#00D4FF:#0099FF><bold>メインメニュー</bold></gradient>"
+  # メニューのタイトル
+  title: "<gradient:#00D4FF:#0099FF><bold>🎮 メインメニュー</bold></gradient>"
 
-  # メニューのサイズ(使用されませんがDialog APIでは無視されます)
-  size: 27
+  # Bedrockエディション用の設定
+  bedrock:
+    title: "§b§lメインメニュー"
+    content: "§7以下から項目を選択してください"
 
-  # Bedrockエディション用のメニュー設定
-  bedrock-title: "§b§lメインメニュー"
-  bedrock-content: "§7以下から項目を選択してください"
+# サブメニュー設定ファイルのパス
+submenus:
+  enabled: true
+  folder: "menus"
+  files:
+    - "shop.yml"
+    - "teleport.yml"
+    - "utilities.yml"
+    - "links.yml"
 
-  # メニューアイテムの設定
-  items:
-    teleport:
-      title: "<aqua><bold>テレポート</bold></aqua>"
-      icon: ENDER_PEARL
-      description:
-        - "§7ロビーにテレポートします"
-        - "§8クリックして移動"
-      command: "[player]spawn"
-      permission: "visualmenu.teleport"
-      slot: 0
+# メインメニューの項目設定
+# サブメニューを持つ項目は "submenu: <submenu_id>" を指定
+items:
+  profile:
+    title: "<aqua><bold>プロフィール</bold></aqua>"
+    icon: PLAYER_HEAD
+    description:
+      - "§7あなたのプロフィールを表示"
+      - "§8クリックして開く"
+    command: "[player]dp"
+    permission: null
+    order: 1
 
-    shop:
-      title: "<gold><bold>ショップ</bold></gold>"
-      icon: EMERALD
-      description:
-        - "§7アイテムショップを開きます"
-        - "§8便利なアイテムが購入できます"
-      command: "[player]shop"
-      permission: null
-      slot: 1
+  shop:
+    title: "<gold><bold>サーバーショップ</bold></gold>"
+    icon: EMERALD
+    description:
+      - "§7サーバーショップを開く"
+      - "§8様々なアイテムを購入可能"
+    submenu: "shop"
+    permission: null
+    order: 2
 
-    skills:
-      title: "<green><bold>スキル</bold></green>"
-      icon: ENCHANTING_TABLE
-      description:
-        - "§7スキルメニューを開きます"
-        - "§8スキルの確認と管理"
-      command: "[player]skills"
-      permission: "visualmenu.skills"
-      slot: 2
+  sociallikes:
+    title: "<light_purple><bold>SocialLikes</bold></light_purple>"
+    icon: DIAMOND
+    description:
+      - "§7ソーシャル機能を開く"
+      - "§8いいねやフォロー機能"
+    command: "[player]slmenu"
+    permission: null
+    order: 3
 
-    profile:
-      title: "<yellow><bold>プロフィール</bold></yellow>"
-      icon: BOOK
-      description:
-        - "§7あなたのプロフィールを表示"
-        - "§8統計情報を確認"
-      command: "[player]profile"
-      permission: null
-      slot: 3
+  teleport:
+    title: "<green><bold>テレポート</bold></green>"
+    icon: ENDER_PEARL
+    description:
+      - "§7各地へテレポート"
+      - "§8様々な場所へ移動"
+    submenu: "teleport"
+    permission: null
+    order: 4
 
-    settings:
-      title: "<gray><bold>設定</bold></gray>"
-      icon: REDSTONE
-      description:
-        - "§7ゲーム設定を変更"
-        - "§8カスタマイズオプション"
-      command: "[player]settings"
-      permission: null
-      slot: 4
+  utilities:
+    title: "<yellow><bold>便利機能</bold></yellow>"
+    icon: CHEST
+    description:
+      - "§7便利な機能を使用"
+      - "§8作業台やバックパックなど"
+    submenu: "utilities"
+    permission: null
+    order: 5
 
-    kit:
-      title: "<red><bold>キット</bold></red>"
-      icon: DIAMOND_SWORD
-      description:
-        - "§7キットを選択します"
-        - "§8PvP用の装備セット"
-      command: "[player]kit"
-      permission: "visualmenu.kit"
-      slot: 5
+  links:
+    title: "<blue><bold>リンク</bold></blue>"
+    icon: MAP
+    description:
+      - "§7外部リンクやツール"
+      - "§8Wiki、Discord、マップなど"
+    submenu: "links"
+    permission: null
+    order: 6
 
-    warps:
-      title: "<light_purple><bold>ワープ</bold></light_purple>"
-      icon: COMPASS
-      description:
-        - "§7ワープポイント一覧"
-        - "§8様々な場所へ移動"
-      command: "[player]warps"
-      permission: null
-      slot: 6
-
-    help:
-      title: "<white><bold>ヘルプ</bold></white>"
-      icon: NETHER_STAR
-      description:
-        - "§7ヘルプメニューを表示"
-        - "§8コマンドやルールを確認"
-      command: "[player]help"
-      permission: null
-      slot: 7
+  admin:
+    title: "<red><bold>管理者コマンド</bold></red>"
+    icon: COMMAND_BLOCK
+    description:
+      - "§7管理者用コマンド"
+      - "§8OP権限が必要"
+    submenu: "admin"
+    permission: "minecraft.command.op"
+    order: 7

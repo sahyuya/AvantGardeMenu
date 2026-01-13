@@ -1,0 +1,70 @@
+# サーバーショップサブメニュー設定
+
+submenu:
+  id: "shop"
+  title: "<gold><bold>🏪 サーバーショップ</bold></gold>"
+
+  bedrock:
+    title: "§6§lサーバーショップ"
+    content: "§7購入したいカテゴリを選択してください"
+
+# ショップカテゴリ
+items:
+  blocks:
+    title: "<gray><bold>建材ブロック</bold></gray>"
+    icon: STONE
+    description:
+      - "§7建築用のブロックを購入"
+      - "§8石、木材、レンガなど"
+    command: "[player]shop open blocks"
+    permission: null
+    order: 1
+
+  decorations:
+    title: "<light_purple><bold>装飾</bold></light_purple>"
+    icon: FLOWER_POT
+    description:
+      - "§7装飾アイテムを購入"
+      - "§8花、絵画、額縁など"
+    command: "[player]shop open decorations"
+    permission: null
+    order: 2
+
+  ores:
+    title: "<aqua><bold>鉱石</bold></aqua>"
+    icon: DIAMOND_ORE
+    description:
+      - "§7鉱石や鉱物を購入"
+      - "§8ダイヤ、金、鉄など"
+    command: "[player]shop open ores"
+    permission: null
+    order: 3
+
+  tools:
+    title: "<yellow><bold>ツール/食料</bold></yellow>"
+    icon: IRON_PICKAXE
+    description:
+      - "§7道具や食料を購入"
+      - "§8ツール、武器、食べ物"
+    command: "[player]shop open tools"
+    permission: null
+    order: 4
+
+  points:
+    title: "<green><bold>ポイント</bold></green>"
+    icon: GOLD_INGOT
+    description:
+      - "§7ポイントショップを開く"
+      - "§8特別なアイテムを交換"
+    command: "[player]blockshop"
+    permission: null
+    order: 5
+
+  back:
+    title: "<red>戻る</red>"
+    icon: BARRIER
+    description:
+      - "§7メインメニューに戻る"
+    command: "[special]back"
+    permission: null
+    order: 6
