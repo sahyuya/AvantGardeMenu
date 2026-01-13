@@ -1,0 +1,95 @@
+# VisualMenu Configuration File
+# MiniMessage形式とレガシーカラーコード(§)の両方をサポート
+
+menu:
+  # Javaエディション用のメニュータイトル
+  title: "<gradient:#00D4FF:#0099FF><bold>メインメニュー</bold></gradient>"
+
+  # メニューのサイズ(使用されませんがDialog APIでは無視されます)
+  size: 27
+
+  # Bedrockエディション用のメニュー設定
+  bedrock-title: "§b§lメインメニュー"
+  bedrock-content: "§7以下から項目を選択してください"
+
+  # メニューアイテムの設定
+  items:
+    teleport:
+      title: "<aqua><bold>テレポート</bold></aqua>"
+      icon: ENDER_PEARL
+      description:
+        - "§7ロビーにテレポートします"
+        - "§8クリックして移動"
+      command: "[player]spawn"
+      permission: "visualmenu.teleport"
+      slot: 0
+
+    shop:
+      title: "<gold><bold>ショップ</bold></gold>"
+      icon: EMERALD
+      description:
+        - "§7アイテムショップを開きます"
+        - "§8便利なアイテムが購入できます"
+      command: "[player]shop"
+      permission: null
+      slot: 1
+
+    skills:
+      title: "<green><bold>スキル</bold></green>"
+      icon: ENCHANTING_TABLE
+      description:
+        - "§7スキルメニューを開きます"
+        - "§8スキルの確認と管理"
+      command: "[player]skills"
+      permission: "visualmenu.skills"
+      slot: 2
+
+    profile:
+      title: "<yellow><bold>プロフィール</bold></yellow>"
+      icon: BOOK
+      description:
+        - "§7あなたのプロフィールを表示"
+        - "§8統計情報を確認"
+      command: "[player]profile"
+      permission: null
+      slot: 3
+
+    settings:
+      title: "<gray><bold>設定</bold></gray>"
+      icon: REDSTONE
+      description:
+        - "§7ゲーム設定を変更"
+        - "§8カスタマイズオプション"
+      command: "[player]settings"
+      permission: null
+      slot: 4
+
+    kit:
+      title: "<red><bold>キット</bold></red>"
+      icon: DIAMOND_SWORD
+      description:
+        - "§7キットを選択します"
+        - "§8PvP用の装備セット"
+      command: "[player]kit"
+      permission: "visualmenu.kit"
+      slot: 5
+
+    warps:
+      title: "<light_purple><bold>ワープ</bold></light_purple>"
+      icon: COMPASS
+      description:
+        - "§7ワープポイント一覧"
+        - "§8様々な場所へ移動"
+      command: "[player]warps"
+      permission: null
+      slot: 6
+
+    help:
+      title: "<white><bold>ヘルプ</bold></white>"
+      icon: NETHER_STAR
+      description:
+        - "§7ヘルプメニューを表示"
+        - "§8コマンドやルールを確認"
+      command: "[player]help"
+      permission: null
+      slot: 7

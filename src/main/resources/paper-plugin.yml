@@ -1,0 +1,24 @@
+name: AvantGardeMenu
+version: '1.0.0'
+main: com.github.sahyuya.avantgardemenu.AvantGardeMenu
+api-version: '1.21.8'
+authors: [ sahyuya ]
+description: A visually enhanced menu plugin with Dialog API and Geyser support
+softdepend: [Geyser-Spigot]
+
+# Paper plugin用の依存関係設定
+dependencies:
+  server:
+    Geyser-Spigot:
+      load: BEFORE
+      required: false
+      join-classpath: true
+
+# 権限の定義
+permissions:
+  visualmenu.use:
+    description: Allows using the menu
+    default: true
+  visualmenu.admin:
+    description: Allows admin commands
+    default: op
