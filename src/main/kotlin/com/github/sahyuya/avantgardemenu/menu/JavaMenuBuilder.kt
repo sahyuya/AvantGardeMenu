@@ -50,22 +50,36 @@ class JavaMenuBuilder(private val plugin: AvantGardeMenu) {
     }
 
     fun openSubmenu(player: Player, submenuId: String) {
+        plugin.logger.info("Attempting to open submenu: $submenuId for player ${player.name}")
+
         val submenu = plugin.menuConfig.getSubmenu(submenuId)
         if (submenu == null) {
+            plugin.logger.warning("Submenu not found: $submenuId")
             player.sendMessage(Component.text("サブメニューが見つかりません: $submenuId", NamedTextColor.RED))
             return
         }
 
+        plugin.logger.info("Submenu found: ${submenu.id}, items count: ${submenu.items.size}")
+
         // メニュースタックに追加
         val stack = menuStack.getOrPut(player.uniqueId) { mutableListOf("main") }
         stack.add(submenuId)
+        plugin.logger.info("Menu stack for ${player.name}: $stack")
 
         val availableItems = submenu.items.filter { item ->
             item.permission == null || player.hasPermission(item.permission)
         }
 
+        plugin.logger.info("Available items in submenu: ${availableItems.size}")
+
+        if (availableItems.isEmpty()) {
+            player.sendMessage(Component.text("このサブメニューに表示できるアイテムがありません", NamedTextColor.RED))
+            return
+        }
+
         val dialog = createMenuDialog(availableItems, submenu.title, submenuId)
         player.showDialog(dialog)
+        plugin.logger.info("Submenu dialog shown to ${player.name}")
     }
 
     fun goBack(player: Player) {
@@ -157,7 +171,9 @@ class JavaMenuBuilder(private val plugin: AvantGardeMenu) {
             .build()
     }
 
-    fun handleMenuClick(player: Player, menuId: String, itemId: String) {
+    fun handleMenuClick(player: Player, menuId: String, itemId: String): Boolean {
+        plugin.logger.info("Menu click: menuId=$menuId, itemId=$itemId, player=${player.name}")
+
         // メインメニューまたはサブメニューからアイテムを取得
         val item = if (menuId == "main") {
             plugin.menuConfig.items.find { it.id == itemId }
@@ -167,58 +183,80 @@ class JavaMenuBuilder(private val plugin: AvantGardeMenu) {
 
         if (item == null) {
             plugin.logger.warning("Menu item not found: $menuId/$itemId")
-            return
+            player.sendMessage(Component.text("メニューアイテムが見つかりませんでした", NamedTextColor.RED))
+            return true // ダイアログを閉じる
         }
+
+        plugin.logger.info("Found item: ${item.id}, submenu=${item.submenu}, command=${item.command}")
 
         // 権限チェック
         if (item.permission != null && !player.hasPermission(item.permission)) {
             player.sendMessage(Component.text("このアイテムを使用する権限がありません", NamedTextColor.RED))
-            return
+            return true // ダイアログを閉じる
         }
 
         // サブメニューを持つ場合
         if (item.submenu != null) {
+            plugin.logger.info("Opening submenu: ${item.submenu}")
             openSubmenu(player, item.submenu)
-            return
+            return false // ダイアログを閉じない（サブメニューが開くため）
         }
 
         // コマンドを実行
         if (item.command != null) {
-            executeCommand(player, item.command)
+            plugin.logger.info("Executing command: ${item.command}")
+            return executeCommand(player, item.command)
+        } else {
+            plugin.logger.warning("Item has no command or submenu: ${item.id}")
         }
+
+        return true // ダイアログを閉じる
     }
 
-    private fun executeCommand(player: Player, command: String) {
-        when {
+    /**
+     * コマンドを実行し、ダイアログを閉じるべきかどうかを返す
+     * @return true: ダイアログを閉じる, false: ダイアログを閉じない（新しいダイアログが開く）
+     */
+    private fun executeCommand(player: Player, command: String): Boolean {
+        return when {
             command == "[special]back" -> {
+                // 戻るボタンは新しいダイアログを開くので閉じない
                 goBack(player)
+                false
             }
             command == "[special]nightvision_toggle" -> {
                 toggleNightVision(player)
+                true // ダイアログを閉じる
             }
             command == "[special]tomap_dialog" -> {
+                // tomap入力ダイアログを開くので閉じない
                 openToMapDialog(player)
+                false
             }
             command.startsWith("[special]open_url:") -> {
                 val url = command.substring("[special]open_url:".length)
                 openUrl(player, url)
+                true // ダイアログを閉じる
             }
             command.startsWith("[console]") -> {
                 plugin.server.scheduler.runTask(plugin, Runnable {
                     val cmd = command.substring(9).replace("%player%", player.name)
                     plugin.server.dispatchCommand(plugin.server.consoleSender, cmd)
                 })
+                true // ダイアログを閉じる
             }
             command.startsWith("[player]") -> {
                 plugin.server.scheduler.runTask(plugin, Runnable {
                     val cmd = command.substring(8).replace("%player%", player.name)
                     player.performCommand(cmd)
                 })
+                true // ダイアログを閉じる
             }
             else -> {
                 plugin.server.scheduler.runTask(plugin, Runnable {
                     player.performCommand(command.replace("%player%", player.name))
                 })
+                true // ダイアログを閉じる
             }
         }
     }

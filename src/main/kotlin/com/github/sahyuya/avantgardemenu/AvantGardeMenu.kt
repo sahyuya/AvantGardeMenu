@@ -74,6 +74,20 @@ class AvantGardeMenu : JavaPlugin() {
                                 1
                             }
                     )
+                    .then(
+                        Commands.literal("debug")
+                            .executes { context ->
+                                MenuAdminCommand(this).onDebugCommand(context.source.sender)
+                                1
+                            }
+                    )
+                    .then(
+                        Commands.literal("listmenus")
+                            .executes { context ->
+                                MenuAdminCommand(this).onListMenusCommand(context.source.sender)
+                                1
+                            }
+                    )
                     .build(),
                 "Admin commands for AvantGardeMenu"
             )

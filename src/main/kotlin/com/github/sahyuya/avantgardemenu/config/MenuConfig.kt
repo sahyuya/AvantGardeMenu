@@ -61,7 +61,10 @@ class MenuConfig(private val plugin: AvantGardeMenu) {
         submenus.clear()
 
         val menusFolder = File(plugin.dataFolder, "menus")
+        plugin.logger.info("Loading submenus from: ${menusFolder.absolutePath}")
+
         if (!menusFolder.exists()) {
+            plugin.logger.info("Menus folder does not exist, creating...")
             menusFolder.mkdirs()
             // デフォルトの設定ファイルを作成
             saveDefaultSubmenuFiles()
@@ -71,15 +74,25 @@ class MenuConfig(private val plugin: AvantGardeMenu) {
             file.extension == "yml" || file.extension == "yaml"
         } ?: emptyArray()
 
+        plugin.logger.info("Found ${submenuFiles.size} submenu files")
+
         for (file in submenuFiles) {
             try {
+                plugin.logger.info("Loading submenu file: ${file.name}")
                 val submenuConfig = YamlConfiguration.loadConfiguration(file)
-                val submenuSection = submenuConfig.getConfigurationSection("submenu") ?: continue
+                val submenuSection = submenuConfig.getConfigurationSection("submenu")
+
+                if (submenuSection == null) {
+                    plugin.logger.warning("File ${file.name} does not contain 'submenu' section")
+                    continue
+                }
 
                 val id = submenuSection.getString("id") ?: file.nameWithoutExtension
                 val title = submenuSection.getString("title") ?: id
                 val bedrockTitle = submenuSection.getString("bedrock.title") ?: title
                 val bedrockContent = submenuSection.getString("bedrock.content") ?: ""
+
+                plugin.logger.info("Submenu ID: $id, Title: $title")
 
                 val items = loadMenuItems(submenuConfig.getConfigurationSection("items"))
 
@@ -87,8 +100,12 @@ class MenuConfig(private val plugin: AvantGardeMenu) {
                 plugin.logger.info("Loaded submenu: $id with ${items.size} items")
             } catch (e: Exception) {
                 plugin.logger.warning("Failed to load submenu from ${file.name}: ${e.message}")
+                e.printStackTrace()
             }
         }
+
+        plugin.logger.info("Total submenus loaded: ${submenus.size}")
+        plugin.logger.info("Submenu IDs: ${submenus.keys}")
     }
 
     private fun loadMenuItems(section: org.bukkit.configuration.ConfigurationSection?): List<MenuItem> {
@@ -125,14 +142,20 @@ class MenuConfig(private val plugin: AvantGardeMenu) {
     private fun saveDefaultSubmenuFiles() {
         val menusFolder = File(plugin.dataFolder, "menus")
 
-        // shop.yml
-        plugin.saveResource("menus/shop.yml", false)
-        // teleport.yml
-        plugin.saveResource("menus/teleport.yml", false)
-        // utilities.yml
-        plugin.saveResource("menus/utilities.yml", false)
-        // links.yml
-        plugin.saveResource("menus/links.yml", false)
+        val files = listOf("shop.yml", "teleport.yml", "utilities.yml", "links.yml")
+
+        for (fileName in files) {
+            val file = File(menusFolder, fileName)
+            if (!file.exists()) {
+                try {
+                    plugin.saveResource("menus/$fileName", false)
+                    plugin.logger.info("Created default submenu file: $fileName")
+                } catch (e: Exception) {
+                    plugin.logger.warning("Could not save default submenu file $fileName: ${e.message}")
+                    plugin.logger.warning("Please manually create the file in plugins/AvantGardeMenu/menus/")
+                }
+            }
+        }
     }
 
     fun getSubmenu(id: String): SubMenuConfig? {

@@ -44,25 +44,30 @@ class MenuListener(private val plugin: AvantGardeMenu) : Listener {
 
         // メニューアイテムのクリック処理
         if (key.startsWith("menu_")) {
-            handleMenuClick(key, player)
-            player.closeDialog()
+            val menuBuilder = JavaMenuBuilder(plugin)
+            val shouldClose = handleMenuClick(key, player, menuBuilder)
+
+            // サブメニューを開く場合は閉じない、コマンド実行の場合は閉じる
+            if (shouldClose) {
+                player.closeDialog()
+            }
         }
     }
 
-    private fun handleMenuClick(key: String, player: Player) {
+    private fun handleMenuClick(key: String, player: Player, menuBuilder: JavaMenuBuilder): Boolean {
         // "menu_<menuId>_<itemId>" の形式をパース
         val parts = key.removePrefix("menu_").split("_", limit = 2)
 
         if (parts.size != 2) {
             plugin.logger.warning("Invalid menu key format: $key")
-            return
+            return true // エラー時は閉じる
         }
 
         val menuId = parts[0]
         val itemId = parts[1]
 
-        val menuBuilder = JavaMenuBuilder(plugin)
-        menuBuilder.handleMenuClick(player, menuId, itemId)
+        // handleMenuClickがBooleanを返すようになったので、その値を返す
+        return menuBuilder.handleMenuClick(player, menuId, itemId)
     }
 
     private fun handleToMapConfirm(event: PlayerCustomClickEvent, player: Player) {
