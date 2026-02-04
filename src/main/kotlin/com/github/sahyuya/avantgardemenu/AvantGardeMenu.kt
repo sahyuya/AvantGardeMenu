@@ -88,6 +88,13 @@ class AvantGardeMenu : JavaPlugin() {
                                 1
                             }
                     )
+                    .then(
+                        Commands.literal("regenerate")
+                            .executes { context ->
+                                MenuAdminCommand(this).onRegenerateCommand(context.source.sender)
+                                1
+                            }
+                    )
                     .build(),
                 "Admin commands for AvantGardeMenu"
             )

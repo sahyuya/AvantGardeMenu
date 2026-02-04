@@ -12,6 +12,7 @@ submenu:
 items:
   spawn:
     title: "<aqua><bold>スポーン</bold></aqua>"
+    title_plain: "スポーン"
     icon: BEACON
     description:
       - "§7スポーン地点へ移動"
@@ -22,6 +23,7 @@ items:
 
   resource:
     title: "<dark_green><bold>資源ワールド</bold></dark_green>"
+    title_plain: "資源ワールド"
     icon: GRASS_BLOCK
     description:
       - "§7資源採取用ワールドへ移動"
@@ -32,6 +34,7 @@ items:
 
   cave:
     title: "<gray><bold>鉱山</bold></gray>"
+    title_plain: "鉱山"
     icon: IRON_PICKAXE
     description:
       - "§7鉱山エリアへ移動"
@@ -42,6 +45,7 @@ items:
 
   shop_area:
     title: "<gold><bold>おやさい商店街</bold></gold>"
+    title_plain: "おやさい商店街"
     icon: EMERALD
     description:
       - "§7商店街エリアへ移動"
@@ -52,6 +56,7 @@ items:
 
   casino:
     title: "<red><bold>カジノ</bold></red>"
+    title_plain: "カジノ"
     icon: GOLD_BLOCK
     description:
       - "§7カジノエリアへ移動"
@@ -62,6 +67,7 @@ items:
 
   pvp:
     title: "<dark_red><bold>PvPロビー</bold></dark_red>"
+    title_plain: "PvPロビー"
     icon: DIAMOND_SWORD
     description:
       - "§7PvPエリアへ移動"
@@ -72,6 +78,7 @@ items:
 
   ender_tt:
     title: "<dark_purple><bold>エンダーマントラップタワー</bold></dark_purple>"
+    title_plain: "エンダーマンTT"
     icon: ENDER_PEARL
     description:
       - "§7エンダーマンTTへ移動"
@@ -82,6 +89,7 @@ items:
 
   back:
     title: "<red>戻る</red>"
+    title_plain: "戻る"
     icon: BARRIER
     description:
       - "§7メインメニューに戻る"

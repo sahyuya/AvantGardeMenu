@@ -79,7 +79,7 @@ class MenuAdminCommand(private val plugin: AvantGardeMenu) {
         // メインメニュー
         sender.sendMessage(Component.text("Main Menu:", NamedTextColor.AQUA))
         plugin.menuConfig.items.forEach { item ->
-            sender.sendMessage(Component.text("  - ${item.id} (${item.title})", NamedTextColor.GRAY))
+            sender.sendMessage(Component.text("  - ${item.id} (${item.titlePlain})", NamedTextColor.GRAY))
         }
 
         // サブメニュー
@@ -88,16 +88,55 @@ class MenuAdminCommand(private val plugin: AvantGardeMenu) {
             val submenu = plugin.menuConfig.getSubmenu(id)
             sender.sendMessage(Component.text("  [$id] ${submenu?.title ?: "Unknown"}", NamedTextColor.YELLOW))
             submenu?.items?.forEach { item ->
-                sender.sendMessage(Component.text("    - ${item.id} (${item.title})", NamedTextColor.DARK_GRAY))
+                sender.sendMessage(Component.text("    - ${item.id} (${item.titlePlain})", NamedTextColor.DARK_GRAY))
             }
         }
 
         sender.sendMessage(Component.text("=======================", NamedTextColor.GOLD))
     }
 
+    fun onRegenerateCommand(sender: CommandSender) {
+        if (!sender.hasPermission("visualmenu.admin")) {
+            sender.sendMessage(Component.text("権限がありません", NamedTextColor.RED))
+            return
+        }
+
+        try {
+            sender.sendMessage(Component.text("設定ファイルを強制再生成しています...", NamedTextColor.YELLOW))
+
+            // config.ymlを再生成
+            plugin.saveDefaultConfig()
+
+            // サブメニューファイルを強制再生成
+            val menusFolder = File(plugin.dataFolder, "menus")
+            if (!menusFolder.exists()) {
+                menusFolder.mkdirs()
+            }
+
+            val files = listOf("shop.yml", "teleport.yml", "utilities.yml", "links.yml", "admin.yml")
+            for (fileName in files) {
+                try {
+                    plugin.saveResource("menus/$fileName", true)
+                    sender.sendMessage(Component.text("  ✓ $fileName を再生成", NamedTextColor.GREEN))
+                } catch (e: Exception) {
+                    sender.sendMessage(Component.text("  ✗ $fileName の再生成に失敗: ${e.message}", NamedTextColor.RED))
+                }
+            }
+
+            // 設定を再読み込み
+            plugin.reload()
+
+            sender.sendMessage(Component.text("設定ファイルの再生成と再読み込みが完了しました", NamedTextColor.GREEN))
+        } catch (e: Exception) {
+            sender.sendMessage(Component.text("再生成中にエラーが発生しました: ${e.message}", NamedTextColor.RED))
+            plugin.logger.severe("Error regenerating configs: ${e.message}")
+            e.printStackTrace()
+        }
+    }
+
     private fun getLoadedSubmenusCount(): Int {
         var count = 0
-        listOf("shop", "teleport", "utilities", "links").forEach { id ->
+        listOf("shop", "teleport", "utilities", "links", "admin").forEach { id ->
             if (plugin.menuConfig.getSubmenu(id) != null) {
                 count++
             }
@@ -106,7 +145,7 @@ class MenuAdminCommand(private val plugin: AvantGardeMenu) {
     }
 
     private fun getLoadedSubmenuIds(): List<String> {
-        return listOf("shop", "teleport", "utilities", "links").filter { id ->
+        return listOf("shop", "teleport", "utilities", "links", "admin").filter { id ->
             plugin.menuConfig.getSubmenu(id) != null
         }
     }

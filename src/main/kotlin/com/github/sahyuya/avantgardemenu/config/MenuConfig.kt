@@ -11,6 +11,7 @@ import java.io.File
 data class MenuItem(
     val id: String,
     val title: String,
+    val titlePlain: String,  // 装飾なしのタイトル（表示用）
     val icon: Material,
     val description: List<String>,
     val command: String?,
@@ -117,6 +118,7 @@ class MenuConfig(private val plugin: AvantGardeMenu) {
             try {
                 val itemPath = key
                 val title = section.getString("$itemPath.title") ?: key
+                val titlePlain = section.getString("$itemPath.title_plain") ?: stripFormatting(title)
                 val iconString = section.getString("$itemPath.icon") ?: "STONE"
                 val icon = try {
                     Material.valueOf(iconString.uppercase())
@@ -130,7 +132,7 @@ class MenuConfig(private val plugin: AvantGardeMenu) {
                 val permission = section.getString("$itemPath.permission")
                 val order = section.getInt("$itemPath.order", itemsList.size)
 
-                itemsList.add(MenuItem(key, title, icon, description, command, submenu, permission, order))
+                itemsList.add(MenuItem(key, title, titlePlain, icon, description, command, submenu, permission, order))
             } catch (e: Exception) {
                 plugin.logger.warning("Failed to load menu item $key: ${e.message}")
             }
@@ -139,21 +141,30 @@ class MenuConfig(private val plugin: AvantGardeMenu) {
         return itemsList.sortedBy { it.order }
     }
 
+    /**
+     * MiniMessageやレガシーカラーコードを除去してプレーンテキストを返す
+     */
+    private fun stripFormatting(text: String): String {
+        // MiniMessageタグを除去
+        var result = text.replace(Regex("<[^>]+>"), "")
+        // レガシーカラーコード(§)を除去
+        result = result.replace(Regex("§[0-9a-fk-or]"), "")
+        return result
+    }
+
     private fun saveDefaultSubmenuFiles() {
         val menusFolder = File(plugin.dataFolder, "menus")
 
-        val files = listOf("shop.yml", "teleport.yml", "utilities.yml", "links.yml")
+        val files = listOf("shop.yml", "teleport.yml", "utilities.yml", "links.yml", "admin.yml")
 
         for (fileName in files) {
-            val file = File(menusFolder, fileName)
-            if (!file.exists()) {
-                try {
-                    plugin.saveResource("menus/$fileName", false)
-                    plugin.logger.info("Created default submenu file: $fileName")
-                } catch (e: Exception) {
-                    plugin.logger.warning("Could not save default submenu file $fileName: ${e.message}")
-                    plugin.logger.warning("Please manually create the file in plugins/AvantGardeMenu/menus/")
-                }
+            try {
+                // 毎回上書きして最新の設定ファイルを生成
+                plugin.saveResource("menus/$fileName", true)
+                plugin.logger.info("Regenerated submenu file: $fileName")
+            } catch (e: Exception) {
+                plugin.logger.warning("Could not save submenu file $fileName: ${e.message}")
+                plugin.logger.warning("Please manually create the file in plugins/AvantGardeMenu/menus/")
             }
         }
     }

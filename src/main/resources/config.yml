@@ -23,9 +23,29 @@ submenus:
 
 # メインメニューの項目設定
 # サブメニューを持つ項目は "submenu: <submenu_id>" を指定
+#
+# フォーマット:
+#   item_id:
+#     title: "<装飾付きタイトル>"          # MiniMessage形式またはレガシーカラーコード
+#     title_plain: "装飾なしタイトル"       # リスト表示用（省略時は自動除去）
+#     icon: MATERIAL_NAME                  # Minecraftのマテリアル名
+#     description:                         # 説明文（複数行可）
+#       - "§7説明1"
+#       - "§8説明2"
+#     command: "[player]command"           # 実行コマンド（後述）
+#     submenu: "submenu_id"                # サブメニューID（commandと排他）
+#     permission: "permission.node"        # 必要な権限（nullで全員）
+#     order: 1                             # 表示順序
+#
+# コマンドタイプ:
+#   [player]command    - プレイヤーとして実行
+#   [console]command   - コンソールから実行
+#   [special]action    - 特殊アクション
+#
 items:
   profile:
     title: "<aqua><bold>プロフィール</bold></aqua>"
+    title_plain: "プロフィール"
     icon: PLAYER_HEAD
     description:
       - "§7あなたのプロフィールを表示"
@@ -36,6 +56,7 @@ items:
 
   shop:
     title: "<gold><bold>サーバーショップ</bold></gold>"
+    title_plain: "サーバーショップ"
     icon: EMERALD
     description:
       - "§7サーバーショップを開く"
@@ -46,6 +67,7 @@ items:
 
   sociallikes:
     title: "<light_purple><bold>SocialLikes</bold></light_purple>"
+    title_plain: "SocialLikes"
     icon: DIAMOND
     description:
       - "§7ソーシャル機能を開く"
@@ -56,6 +78,7 @@ items:
 
   teleport:
     title: "<green><bold>テレポート</bold></green>"
+    title_plain: "テレポート"
     icon: ENDER_PEARL
     description:
       - "§7各地へテレポート"
@@ -66,6 +89,7 @@ items:
 
   utilities:
     title: "<yellow><bold>便利機能</bold></yellow>"
+    title_plain: "便利機能"
     icon: CHEST
     description:
       - "§7便利な機能を使用"
@@ -76,6 +100,7 @@ items:
 
   links:
     title: "<blue><bold>リンク</bold></blue>"
+    title_plain: "リンク"
     icon: MAP
     description:
       - "§7外部リンクやツール"
@@ -86,6 +111,7 @@ items:
 
   admin:
     title: "<red><bold>管理者コマンド</bold></red>"
+    title_plain: "管理者コマンド"
     icon: COMMAND_BLOCK
     description:
       - "§7管理者用コマンド"

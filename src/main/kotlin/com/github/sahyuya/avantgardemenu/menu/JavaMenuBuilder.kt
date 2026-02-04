@@ -233,6 +233,26 @@ class JavaMenuBuilder(private val plugin: AvantGardeMenu) {
                 openToMapDialog(player)
                 false
             }
+            command == "[special]admin_promote" -> {
+                openPromoteDialog(player)
+                false
+            }
+            command == "[special]admin_coreprotect" -> {
+                openCoreProtectDialog(player)
+                false
+            }
+            command == "[special]admin_ban" -> {
+                openBanDialog(player)
+                false
+            }
+            command == "[special]admin_worldsize" -> {
+                openWorldSizeDialog(player)
+                false
+            }
+            command == "[special]admin_createworld" -> {
+                openCreateWorldDialog(player)
+                false
+            }
             command.startsWith("[special]open_url:") -> {
                 val url = command.substring("[special]open_url:".length)
                 openUrl(player, url)
@@ -347,6 +367,248 @@ class JavaMenuBuilder(private val plugin: AvantGardeMenu) {
                 Component.text("マップアートを作成中... ($widthInt x $heightInt)", NamedTextColor.GREEN)
             )
         })
+    }
+
+    // === 管理者用ダイアログ ===
+
+    private fun openPromoteDialog(player: Player) {
+        val dialog = Dialog.create { factory ->
+            factory.empty()
+                .base(
+                    DialogBase.builder(Component.text("プレイヤー昇格", NamedTextColor.GOLD))
+                        .canCloseWithEscape(true)
+                        .body(listOf(
+                            DialogBody.plainMessage(
+                                Component.text("昇格させるプレイヤー名を入力してください")
+                                    .color(NamedTextColor.GRAY)
+                            )
+                        ))
+                        .inputs(listOf(
+                            DialogInput.text("player", Component.text("プレイヤー名", NamedTextColor.AQUA))
+                                .initial("")
+                                .build(),
+                            DialogInput.bool("good", Component.text("GOODを付ける", NamedTextColor.YELLOW))
+                                .initial(false)
+                                .build()
+                        ))
+                        .build()
+                )
+                .type(
+                    DialogType.confirmation(
+                        ActionButton.builder(Component.text("実行", NamedTextColor.GREEN))
+                            .tooltip(Component.text("昇格を実行します"))
+                            .action(DialogAction.customClick(
+                                Key.key("avantgardemenu", "admin_promote_confirm"),
+                                null
+                            ))
+                            .build(),
+                        ActionButton.builder(Component.text("キャンセル", NamedTextColor.RED))
+                            .action(null)
+                            .build()
+                    )
+                )
+        }
+
+        player.showDialog(dialog)
+    }
+
+    private fun openCoreProtectDialog(player: Player) {
+        val dialog = Dialog.create { factory ->
+            factory.empty()
+                .base(
+                    DialogBase.builder(Component.text("CoreProtect操作", NamedTextColor.BLUE))
+                        .canCloseWithEscape(true)
+                        .body(listOf(
+                            DialogBody.plainMessage(
+                                Component.text("CoreProtectのlookup/rollbackを実行します")
+                                    .color(NamedTextColor.GRAY)
+                            )
+                        ))
+                        .inputs(listOf(
+                            DialogInput.bool("do_lookup", Component.text("Lookupを実行", NamedTextColor.AQUA))
+                                .initial(true)
+                                .build(),
+                            DialogInput.bool("do_rollback", Component.text("Rollbackを実行", NamedTextColor.RED))
+                                .initial(false)
+                                .build(),
+                            DialogInput.text("player", Component.text("プレイヤー名", NamedTextColor.YELLOW))
+                                .initial("")
+                                .build(),
+                            DialogInput.text("time_lookup", Component.text("Lookup時間 (例: 1h, 30m)", NamedTextColor.GREEN))
+                                .initial("1h")
+                                .build(),
+                            DialogInput.text("time_rollback", Component.text("Rollback時間 (例: 1h, 30m)", NamedTextColor.GREEN))
+                                .initial("1h")
+                                .build(),
+                            DialogInput.text("radius", Component.text("範囲 (半径)", NamedTextColor.LIGHT_PURPLE))
+                                .initial("10")
+                                .build(),
+                            DialogInput.text("extra_params", Component.text("追加パラメータ (任意)", NamedTextColor.GRAY))
+                                .initial("")
+                                .build(),
+                            DialogInput.bool("exclude_ores", Component.text("鉱石を除外", NamedTextColor.GOLD))
+                                .initial(false)
+                                .build()
+                        ))
+                        .build()
+                )
+                .type(
+                    DialogType.confirmation(
+                        ActionButton.builder(Component.text("実行", NamedTextColor.GREEN))
+                            .action(DialogAction.customClick(
+                                Key.key("avantgardemenu", "admin_coreprotect_confirm"),
+                                null
+                            ))
+                            .build(),
+                        ActionButton.builder(Component.text("キャンセル", NamedTextColor.RED))
+                            .action(null)
+                            .build()
+                    )
+                )
+        }
+
+        player.showDialog(dialog)
+    }
+
+    private fun openBanDialog(player: Player) {
+        val dialog = Dialog.create { factory ->
+            factory.empty()
+                .base(
+                    DialogBase.builder(Component.text("プレイヤーBAN", NamedTextColor.DARK_RED))
+                        .canCloseWithEscape(true)
+                        .body(listOf(
+                            DialogBody.plainMessage(
+                                Component.text("BANするプレイヤー情報を入力してください")
+                                    .color(NamedTextColor.GRAY)
+                            )
+                        ))
+                        .inputs(listOf(
+                            DialogInput.text("player", Component.text("プレイヤー名", NamedTextColor.AQUA))
+                                .initial("")
+                                .build(),
+                            DialogInput.text("time", Component.text("BAN期間 (例: 7d, 1mo, 永久の場合は空)", NamedTextColor.YELLOW))
+                                .initial("")
+                                .build(),
+                            DialogInput.text("reason", Component.text("理由", NamedTextColor.RED))
+                                .initial("")
+                                .build()
+                        ))
+                        .build()
+                )
+                .type(
+                    DialogType.confirmation(
+                        ActionButton.builder(Component.text("BAN実行", NamedTextColor.DARK_RED))
+                            .action(DialogAction.customClick(
+                                Key.key("avantgardemenu", "admin_ban_confirm"),
+                                null
+                            ))
+                            .build(),
+                        ActionButton.builder(Component.text("キャンセル", NamedTextColor.GREEN))
+                            .action(null)
+                            .build()
+                    )
+                )
+        }
+
+        player.showDialog(dialog)
+    }
+
+    private fun openWorldSizeDialog(player: Player) {
+        val dialog = Dialog.create { factory ->
+            factory.empty()
+                .base(
+                    DialogBase.builder(Component.text("ワールドサイズ拡張", NamedTextColor.GREEN))
+                        .canCloseWithEscape(true)
+                        .body(listOf(
+                            DialogBody.plainMessage(
+                                Component.text("ワールドサイズを拡張します")
+                                    .color(NamedTextColor.GRAY)
+                            )
+                        ))
+                        .inputs(listOf(
+                            DialogInput.text("player", Component.text("プレイヤー名", NamedTextColor.AQUA))
+                                .initial("")
+                                .build(),
+                            DialogInput.text("points", Component.text("消費ポイント (100の倍数、入力×100)", NamedTextColor.YELLOW))
+                                .initial("1")
+                                .build()
+                        ))
+                        .build()
+                )
+                .type(
+                    DialogType.confirmation(
+                        ActionButton.builder(Component.text("実行", NamedTextColor.GREEN))
+                            .action(DialogAction.customClick(
+                                Key.key("avantgardemenu", "admin_worldsize_confirm"),
+                                null
+                            ))
+                            .build(),
+                        ActionButton.builder(Component.text("キャンセル", NamedTextColor.RED))
+                            .action(null)
+                            .build()
+                    )
+                )
+        }
+
+        player.showDialog(dialog)
+    }
+
+    private fun openCreateWorldDialog(player: Player) {
+        val dialog = Dialog.create { factory ->
+            factory.empty()
+                .base(
+                    DialogBase.builder(Component.text("ワールド作成", NamedTextColor.AQUA))
+                        .canCloseWithEscape(true)
+                        .body(listOf(
+                            DialogBody.plainMessage(
+                                Component.text("新しいワールドを作成します")
+                                    .color(NamedTextColor.GRAY)
+                            )
+                        ))
+                        .inputs(listOf(
+                            DialogInput.text("name", Component.text("ワールド名", NamedTextColor.YELLOW))
+                                .initial("")
+                                .build(),
+                            DialogInput.numberRange("world_type", Component.text("ワールド種類", NamedTextColor.GREEN), 0f, 2f)
+                                .initial(0f)
+                                .step(1f)
+                                .labelFormat("種類: %s (0=通常, 1=ネザー, 2=エンド)")
+                                .width(300)
+                                .build(),
+                            DialogInput.numberRange("generation_type", Component.text("生成タイプ", NamedTextColor.LIGHT_PURPLE), 0f, 1f)
+                                .initial(0f)
+                                .step(1f)
+                                .labelFormat("タイプ: %s (0=通常, 1=フラット)")
+                                .width(300)
+                                .build(),
+                            DialogInput.bool("no_structures", Component.text("構造物なし", NamedTextColor.GRAY))
+                                .initial(false)
+                                .build(),
+                            DialogInput.bool("no_natural_mob", Component.text("自然モブスポーン禁止", NamedTextColor.RED))
+                                .initial(false)
+                                .build(),
+                            DialogInput.bool("no_forced_mob", Component.text("モブスポーン強制禁止", NamedTextColor.DARK_RED))
+                                .initial(false)
+                                .build()
+                        ))
+                        .build()
+                )
+                .type(
+                    DialogType.confirmation(
+                        ActionButton.builder(Component.text("作成", NamedTextColor.GREEN))
+                            .action(DialogAction.customClick(
+                                Key.key("avantgardemenu", "admin_createworld_confirm"),
+                                null
+                            ))
+                            .build(),
+                        ActionButton.builder(Component.text("キャンセル", NamedTextColor.RED))
+                            .action(null)
+                            .build()
+                    )
+                )
+        }
+
+        player.showDialog(dialog)
     }
 
     private fun parseTitle(text: String): Component {

@@ -23,6 +23,12 @@ Purpur 1.21.8+ 向けの視認性を重視したメニュープラグイン
 - **便利機能** - 作業台、バックパック、暗視など
 - **リンク集** - Wiki、Discord、投票サイト、マップ
 - **画像マップアート化** - URLから直接マップアート生成
+- **管理者コマンド** - OP専用の管理機能
+  - プレイヤー昇格
+  - CoreProtect操作 (lookup/rollback)
+  - プレイヤーBAN
+  - ワールドサイズ拡張
+  - ワールド作成（Multiverse + WorldBorder自動設定）
 
 ## 動作環境
 
@@ -56,7 +62,8 @@ plugins/AvantGardeMenu/
     ├── shop.yml            # ショップサブメニュー
     ├── teleport.yml        # テレポートサブメニュー
     ├── utilities.yml       # 便利機能サブメニュー
-    └── links.yml           # リンクサブメニュー
+    ├── links.yml           # リンクサブメニュー
+    └── admin.yml           # 管理者サブメニュー (OP専用)
 ```
 
 ## コマンド
@@ -67,6 +74,7 @@ plugins/AvantGardeMenu/
 | `/menuadmin reload` | 設定を再読み込み | `visualmenu.admin` (デフォルト: op) |
 | `/menuadmin debug` | デバッグ情報を表示 | `visualmenu.admin` (デフォルト: op) |
 | `/menuadmin listmenus` | 読み込まれたメニューを一覧表示 | `visualmenu.admin` (デフォルト: op) |
+| `/menuadmin regenerate` | 設定ファイルを強制再生成 | `visualmenu.admin` (デフォルト: op) |
 
 エイリアス: `/vmenu`, `/visualmenu`
 
@@ -126,6 +134,12 @@ menu:
   ```yaml
   command: "[special]tomap_dialog"
   ```
+
+- `[special]admin_promote` - プレイヤー昇格ダイアログを開く (管理者専用)
+- `[special]admin_coreprotect` - CoreProtect操作ダイアログを開く (管理者専用)
+- `[special]admin_ban` - プレイヤーBANダイアログを開く (管理者専用)
+- `[special]admin_worldsize` - ワールドサイズ拡張ダイアログを開く (管理者専用)
+- `[special]admin_createworld` - ワールド作成ダイアログを開く (管理者専用)
 
 ### サブメニュー指定
 

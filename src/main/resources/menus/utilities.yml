@@ -12,6 +12,7 @@ submenu:
 items:
   crafting:
     title: "<brown><bold>作業台</bold></brown>"
+    title_plain: "作業台"
     icon: CRAFTING_TABLE
     description:
       - "§7作業台を開く"
@@ -22,6 +23,7 @@ items:
 
   backpack:
     title: "<dark_green><bold>バックパック</bold></dark_green>"
+    title_plain: "バックパック"
     icon: CHEST
     description:
       - "§7バックパックを開く"
@@ -32,6 +34,7 @@ items:
 
   enderchest:
     title: "<dark_purple><bold>エンダーチェスト</bold></dark_purple>"
+    title_plain: "エンダーチェスト"
     icon: ENDER_CHEST
     description:
       - "§7エンダーチェストを開く"
@@ -42,6 +45,7 @@ items:
 
   trash:
     title: "<red><bold>ゴミ箱</bold></red>"
+    title_plain: "ゴミ箱"
     icon: LAVA_BUCKET
     description:
       - "§7ゴミ箱を開く"
@@ -52,6 +56,7 @@ items:
 
   nightvision:
     title: "<yellow><bold>暗視</bold></yellow>"
+    title_plain: "暗視"
     icon: GOLDEN_CARROT
     description:
       - "§7暗視のオン/オフを切り替え"
@@ -62,6 +67,7 @@ items:
 
   fly:
     title: "<white><bold>飛行モード</bold></white>"
+    title_plain: "飛行モード"
     icon: ELYTRA
     description:
       - "§7飛行モードを切り替え"
@@ -72,6 +78,7 @@ items:
 
   back:
     title: "<red>戻る</red>"
+    title_plain: "戻る"
     icon: BARRIER
     description:
       - "§7メインメニューに戻る"

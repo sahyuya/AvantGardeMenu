@@ -1,4 +1,9 @@
 # サーバーショップサブメニュー設定
+#
+# 新しいアイテムを追加する場合:
+# 1. items: セクションに新しいキーを追加
+# 2. title, title_plain, icon, description, command, order を設定
+# 3. /menuadmin regenerate で反映（または手動で /menuadmin reload）
 
 submenu:
   id: "shop"
@@ -12,6 +17,7 @@ submenu:
 items:
   blocks:
     title: "<gray><bold>建材ブロック</bold></gray>"
+    title_plain: "建材ブロック"
     icon: STONE
     description:
       - "§7建築用のブロックを購入"
@@ -22,6 +28,7 @@ items:
 
   decorations:
     title: "<light_purple><bold>装飾</bold></light_purple>"
+    title_plain: "装飾"
     icon: FLOWER_POT
     description:
       - "§7装飾アイテムを購入"
@@ -32,6 +39,7 @@ items:
 
   ores:
     title: "<aqua><bold>鉱石</bold></aqua>"
+    title_plain: "鉱石"
     icon: DIAMOND_ORE
     description:
       - "§7鉱石や鉱物を購入"
@@ -42,6 +50,7 @@ items:
 
   tools:
     title: "<yellow><bold>ツール/食料</bold></yellow>"
+    title_plain: "ツール/食料"
     icon: IRON_PICKAXE
     description:
       - "§7道具や食料を購入"
@@ -52,6 +61,7 @@ items:
 
   points:
     title: "<green><bold>ポイント</bold></green>"
+    title_plain: "ポイント"
     icon: GOLD_INGOT
     description:
       - "§7ポイントショップを開く"
@@ -62,6 +72,7 @@ items:
 
   back:
     title: "<red>戻る</red>"
+    title_plain: "戻る"
     icon: BARRIER
     description:
       - "§7メインメニューに戻る"

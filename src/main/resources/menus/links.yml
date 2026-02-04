@@ -12,6 +12,7 @@ submenu:
 items:
   wiki:
     title: "<aqua><bold>サーバー公式Wiki</bold></aqua>"
+    title_plain: "サーバー公式Wiki"
     icon: BOOK
     description:
       - "§7サーバーのWikiを開く"
@@ -22,6 +23,7 @@ items:
 
   discord:
     title: "<#5865F2><bold>公式Discord</bold></#5865F2>"
+    title_plain: "公式Discord"
     icon: PAPER
     description:
       - "§7Discordサーバーに参加"
@@ -32,6 +34,7 @@ items:
 
   vote_jms:
     title: "<green><bold>JMS投票</bold></green>"
+    title_plain: "JMS投票"
     icon: EMERALD
     description:
       - "§7JMSでサーバーに投票"
@@ -42,6 +45,7 @@ items:
 
   vote_mp:
     title: "<yellow><bold>MinePortal投票</bold></yellow>"
+    title_plain: "MinePortal投票"
     icon: GOLD_INGOT
     description:
       - "§7MinePortalでサーバーに投票"
@@ -52,6 +56,7 @@ items:
 
   bluemap:
     title: "<dark_aqua><bold>サーバーマップ</bold></dark_aqua>"
+    title_plain: "サーバーマップ"
     icon: FILLED_MAP
     description:
       - "§7BlueMapでサーバーマップを見る"
@@ -62,6 +67,7 @@ items:
 
   tomap:
     title: "<light_purple><bold>画像をマップアート化</bold></light_purple>"
+    title_plain: "画像をマップアート化"
     icon: MAP
     description:
       - "§7画像URLをマップアートに変換"
@@ -72,6 +78,7 @@ items:
 
   back:
     title: "<red>戻る</red>"
+    title_plain: "戻る"
     icon: BARRIER
     description:
       - "§7メインメニューに戻る"

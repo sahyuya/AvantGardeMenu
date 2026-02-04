@@ -1,0 +1,70 @@
+# 管理者メニュー設定
+
+submenu:
+  id: "admin"
+  title: "<red><bold>⚙️ 管理者コマンド</bold></red>"
+
+  bedrock:
+    title: "§c§l管理者コマンド"
+    content: "§7実行したい管理操作を選択してください"
+
+# 管理者用機能
+items:
+  promote:
+    title: "<gold><bold>プレイヤー昇格</bold></gold>"
+    icon: EXPERIENCE_BOTTLE
+    description:
+      - "§7プレイヤーを昇格させる"
+      - "§8/syokaku promote を実行"
+    command: "[special]admin_promote"
+    permission: "minecraft.command.op"
+    order: 1
+
+  coreprotect:
+    title: "<blue><bold>CoreProtect操作</bold></blue>"
+    icon: RECOVERY_COMPASS
+    description:
+      - "§7CoreProtectのlookup/rollback"
+      - "§8ブロック履歴の確認と復元"
+    command: "[special]admin_coreprotect"
+    permission: "minecraft.command.op"
+    order: 2
+
+  ban:
+    title: "<dark_red><bold>プレイヤーBAN</bold></dark_red>"
+    icon: BARRIER
+    description:
+      - "§7プレイヤーをBANする"
+      - "§8/aban を実行"
+    command: "[special]admin_ban"
+    permission: "minecraft.command.op"
+    order: 3
+
+  worldsize:
+    title: "<green><bold>ワールドサイズ拡張</bold></green>"
+    icon: GRASS_BLOCK
+    description:
+      - "§7ワールドサイズを拡張"
+      - "§8/kakutyo を実行"
+    command: "[special]admin_worldsize"
+    permission: "minecraft.command.op"
+    order: 4
+
+  createworld:
+    title: "<aqua><bold>ワールド作成</bold></aqua>"
+    icon: DRAGON_EGG
+    description:
+      - "§7新しいワールドを作成"
+      - "§8MultiverseとWorldBorder設定"
+    command: "[special]admin_createworld"
+    permission: "minecraft.command.op"
+    order: 5
+
+  back:
+    title: "<red>戻る</red>"
+    icon: BARRIER
+    description:
+      - "§7メインメニューに戻る"
+    command: "[special]back"
+    permission: null
+    order: 6
