@@ -101,11 +101,11 @@ class MenuListener(private val plugin: AvantGardeMenu) : Listener {
                 return
             }
 
-            val width = view.getFloat("width") ?: 1f
             val height = view.getFloat("height") ?: 1f
+            val width = view.getFloat("width") ?: 1f
 
             val menuBuilder = JavaMenuBuilder(plugin)
-            menuBuilder.handleToMapConfirm(player, url, width, height)
+            menuBuilder.handleToMapConfirm(player, url, height, width)
 
             player.closeDialog()
         } catch (e: Exception) {
@@ -162,9 +162,9 @@ class MenuListener(private val plugin: AvantGardeMenu) : Listener {
                 return
             }
 
-            val timeLookup = view.getText("time_lookup")?.trim() ?: "1h"
-            val timeRollback = view.getText("time_rollback")?.trim() ?: "1h"
-            val radius = view.getText("radius")?.trim() ?: "10"
+            val timeLookup = view.getText("time_lookup")?.trim() ?: "10h"
+            val timeRollback = view.getText("time_rollback")?.trim() ?: "10h"
+            val radius = view.getText("radius")?.trim() ?: ""
             val extraParams = view.getText("extra_params")?.trim() ?: ""
             val excludeOres = view.getBoolean("exclude_ores") ?: false
 
@@ -174,7 +174,7 @@ class MenuListener(private val plugin: AvantGardeMenu) : Listener {
                     val lookupCmd = buildString {
                         append("co lookup u:$targetPlayer t:$timeLookup r:$radius")
                         if (excludeOres) {
-                            append(" e:-coal_ore,-copper_ore,-iron_ore,-gold_ore,-redstone_ore,-lapis_ore,-diamond_ore,-emerald_ore,-nether_gold_ore,-nether_quartz_ore,-ancient_debris,-deepslate_coal_ore,-deepslate_copper_ore,-deepslate_iron_ore,-deepslate_gold_ore,-deepslate_redstone_ore,-deepslate_lapis_ore,-deepslate_diamond_ore,-deepslate_emerald_ore")
+                            append(" e:-coal_ore,-copper_ore,-iron_ore,-gold_ore,-redstone_ore,-lapis_ore,-diamond_ore,-emerald_ore")
                         }
                         if (extraParams.isNotEmpty()) {
                             append(" $extraParams")
@@ -242,9 +242,9 @@ class MenuListener(private val plugin: AvantGardeMenu) : Listener {
                 return
             }
 
-            val pointsInput = view.getText("points")?.trim() ?: "1"
+            val pointsInput = view.getText("points")?.trim() ?: "100"
             val points = try {
-                pointsInput.toInt() * 100
+                pointsInput.toInt()
             } catch (e: NumberFormatException) {
                 player.sendMessage("§cポイントは数値で入力してください")
                 return
@@ -285,6 +285,7 @@ class MenuListener(private val plugin: AvantGardeMenu) : Listener {
             val noStructures = view.getBoolean("no_structures") ?: false
             val noNaturalMob = view.getBoolean("no_natural_mob") ?: false
             val noForcedMob = view.getBoolean("no_forced_mob") ?: false
+            val noRadomTick = view.getBoolean("no_randomtick") ?: false
 
             plugin.server.scheduler.runTask(plugin, Runnable {
                 // コマンドを順次実行
@@ -303,22 +304,21 @@ class MenuListener(private val plugin: AvantGardeMenu) : Listener {
                 // 2. ワールドにテレポート
                 commands.add("mvtp $worldName ${player.name}")
 
-                // 3. 座標0,0にテレポート
-                commands.add("tp 0 ~ 0")
-
-                // 4. スポーン設定
-                commands.add("mv setspawn")
-
-                // 5. WorldBorder設定
+                // 3. WorldBorder設定
                 commands.add("wb $worldName set 50 0 0")
                 commands.add("wb wshape $worldName square")
 
-                // 6. モブスポーン設定
+                // 4. モブスポーン設定
                 if (noNaturalMob) {
                     commands.add("mv gamerule set doMobSpawning false $worldName")
                 }
                 if (noForcedMob) {
                     commands.add("rg flag __global__ mob-spawning deny")
+                }
+
+                // 5. ランダムティック設定
+                if (noRadomTick) {
+                    commands.add("mv gamerule set randomTickSpeed 0 $worldName")
                 }
 
                 // コマンドを順次実行（少し遅延を入れる）

@@ -321,14 +321,15 @@ class JavaMenuBuilder(private val plugin: AvantGardeMenu) {
                         ))
                         .inputs(listOf(
                             DialogInput.text("url", Component.text("画像URL", NamedTextColor.AQUA))
-                                .initial("https://example.com/image.png")
+                                .maxLength(300)
                                 .build(),
-                            DialogInput.numberRange("width", Component.text("横幅", NamedTextColor.GREEN), 1f, 16f)
+                            DialogInput.numberRange("height", Component.text("縦幅", NamedTextColor.GREEN), 1f, 16f)
                                 .initial(1f)
                                 .step(1f)
                                 .width(250)
                                 .build(),
-                            DialogInput.numberRange("height", Component.text("縦幅", NamedTextColor.GREEN), 1f, 16f)
+
+                            DialogInput.numberRange("width", Component.text("横幅", NamedTextColor.GREEN), 1f, 16f)
                                 .initial(1f)
                                 .step(1f)
                                 .width(250)
@@ -435,13 +436,13 @@ class JavaMenuBuilder(private val plugin: AvantGardeMenu) {
                                 .initial("")
                                 .build(),
                             DialogInput.text("time_lookup", Component.text("Lookup時間 (例: 1h, 30m)", NamedTextColor.GREEN))
-                                .initial("1h")
+                                .initial("10h")
                                 .build(),
                             DialogInput.text("time_rollback", Component.text("Rollback時間 (例: 1h, 30m)", NamedTextColor.GREEN))
-                                .initial("1h")
+                                .initial("10h")
                                 .build(),
                             DialogInput.text("radius", Component.text("範囲 (半径)", NamedTextColor.LIGHT_PURPLE))
-                                .initial("10")
+                                .initial("")
                                 .build(),
                             DialogInput.text("extra_params", Component.text("追加パラメータ (任意)", NamedTextColor.GRAY))
                                 .initial("")
@@ -486,7 +487,7 @@ class JavaMenuBuilder(private val plugin: AvantGardeMenu) {
                             DialogInput.text("player", Component.text("プレイヤー名", NamedTextColor.AQUA))
                                 .initial("")
                                 .build(),
-                            DialogInput.text("time", Component.text("BAN期間 (例: 7d, 1mo, 永久の場合は空)", NamedTextColor.YELLOW))
+                            DialogInput.text("time", Component.text("BAN期間 (例: 7d, 1mo)", NamedTextColor.YELLOW))
                                 .initial("")
                                 .build(),
                             DialogInput.text("reason", Component.text("理由", NamedTextColor.RED))
@@ -529,7 +530,7 @@ class JavaMenuBuilder(private val plugin: AvantGardeMenu) {
                             DialogInput.text("player", Component.text("プレイヤー名", NamedTextColor.AQUA))
                                 .initial("")
                                 .build(),
-                            DialogInput.text("points", Component.text("消費ポイント (100の倍数、入力×100)", NamedTextColor.YELLOW))
+                            DialogInput.text("points", Component.text("消費ポイント (100の倍数で入力して下さい)", NamedTextColor.YELLOW))
                                 .initial("1")
                                 .build()
                         ))
@@ -569,16 +570,16 @@ class JavaMenuBuilder(private val plugin: AvantGardeMenu) {
                             DialogInput.text("name", Component.text("ワールド名", NamedTextColor.YELLOW))
                                 .initial("")
                                 .build(),
-                            DialogInput.numberRange("world_type", Component.text("ワールド種類", NamedTextColor.GREEN), 0f, 2f)
+                            DialogInput.numberRange("world_type", Component.text("ワールドタイプ", NamedTextColor.GREEN), 0f, 2f)
                                 .initial(0f)
                                 .step(1f)
-                                .labelFormat("種類: %s (0=通常, 1=ネザー, 2=エンド)")
+                                .labelFormat("%1\$s:%2\$s (0=通常, 1=ネザー, 2=エンド)")
                                 .width(300)
                                 .build(),
-                            DialogInput.numberRange("generation_type", Component.text("生成タイプ", NamedTextColor.LIGHT_PURPLE), 0f, 1f)
+                            DialogInput.numberRange("generation_type", Component.text("地形タイプ", NamedTextColor.LIGHT_PURPLE), 0f, 1f)
                                 .initial(0f)
                                 .step(1f)
-                                .labelFormat("タイプ: %s (0=通常, 1=フラット)")
+                                .labelFormat("%1\$s:%2\$s (0=通常, 1=フラット)")
                                 .width(300)
                                 .build(),
                             DialogInput.bool("no_structures", Component.text("構造物なし", NamedTextColor.GRAY))
@@ -588,6 +589,9 @@ class JavaMenuBuilder(private val plugin: AvantGardeMenu) {
                                 .initial(false)
                                 .build(),
                             DialogInput.bool("no_forced_mob", Component.text("モブスポーン強制禁止", NamedTextColor.DARK_RED))
+                                .initial(false)
+                                .build(),
+                            DialogInput.bool("no_randomtick", Component.text("自然変化なし", NamedTextColor.GOLD))
                                 .initial(false)
                                 .build()
                         ))
